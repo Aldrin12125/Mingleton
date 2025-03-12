@@ -1,36 +1,200 @@
 <img width="1280" alt="readme-banner" src="https://github.com/Sanjeeb-J/Mingleton/blob/main/img/Mingleton.jpg">
 
-# [Project Name] 🎯
+# [Valentine's Day E-Card maker] 🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: [Love.exe]
 
 ### Team Members
 
-- Member 1: [Name] - [College] - [Contributions]
-- Member 2: [Name] - [College] - [Contributions]
+- Member 1: [Aldrin David Joshy] - [Jyothi Engineering College] - [Concept & Planning, UI/UX Decisions, User input features]
+- Member 2: [Shasna Jasmine] - [Government College of Engineering] - [Feature Improvement, Debugging & Enhancements, Aesthetic Touch]
 
 ### Project Description
 
-[2-3 lines about what your project does]
+[The Valentine’s Day E-Card Maker is a web-based tool that allows users to create personalized digital greeting cards for their loved ones. With an intuitive interface, users can upload their own images, add heartfelt messages, and choose stylish fonts to customize their e-cards. Once finalized, they can download the card in high quality and share it effortlessly.]
 
 ## Technical Details
 
-- [Languages used]
+- [HTML,CSS,JavaScript, html2canvas.js]
 - [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- [html2canvas, Google Fonts]
+- [VS Code,html2canvas,Google fonts,HTML,JavaScript,CSS,Github]
 
 ### Implementation
 
 # Installation
 
-[commands]
+[<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine's Day E-Card Maker ❤</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Pacifico&family=Courier+Prime&family=Roboto+Slab:wght@700&display=swap");
+
+      body {
+        font-family: "Dancing Script", cursive;
+        text-align: center;
+        background: linear-gradient(to right, #ff0000, #800000);
+        color: white;
+        overflow-x: hidden;
+      }
+      .card-container {
+        width: 320px;
+        height: 450px;
+        margin: 20px auto;
+        padding: 20px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+      }
+      .card-container:hover {
+        transform: scale(1.05);
+      }
+      .card-text {
+        font-size: 24px;
+        color: #ffebee;
+        font-family: "Pacifico", cursive;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        position: absolute;
+        bottom: 30px;
+        width: 90%;
+        text-align: center;
+        z-index: 1;
+      }
+      .user-message {
+        font-size: 20px;
+        color: #ffebee;
+        font-family: "Dancing Script", cursive;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        position: absolute;
+        top: 50px;
+        width: 90%;
+        text-align: center;
+        z-index: 1;
+      }
+      .download-btn,
+      button {
+        margin-top: 15px;
+        padding: 12px 20px;
+        font-size: 16px;
+        background: #ff4d6d;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        font-family: "Dancing Script", cursive;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #e63950;
+      }
+      input,
+      select {
+        padding: 10px;
+        border: 2px solid #ff4d6d;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: "Dancing Script", cursive;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="font-size: 36px; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3)">
+      Valentine's Day E-Card Maker 💖💌
+    </h1>
+    <input
+      type="file"
+      id="image-upload"
+      accept="image/*"
+      onchange="updateBackground()"
+    />
+    <div class="card-container" id="card">
+      <div class="user-message" id="user-message"></div>
+      <div class="card-text">💘 Happy Valentine's Day! 💕</div>
+    </div>
+
+    <input type="text" id="text-input" placeholder="Enter your message 💝" />
+    <select id="font-select" onchange="updateFont()">
+      <option value="Pacifico">Cursive ✍</option>
+      <option value="Courier Prime">Typewriter 📝</option>
+      <option value="Roboto Slab">Bold & Modern 💪</option>
+      <option value="Dancing Script">Handwritten ✒</option>
+    </select>
+    <button onclick="updateText()">Update Message 💖</button>
+    <button class="download-btn" onclick="downloadCard()">
+      Download Card 📩
+    </button>
+
+    <script>
+      function updateText() {
+        let userText = document.getElementById("text-input").value;
+        document.getElementById("user-message").innerText =
+          "💌 " + userText + " 💘";
+      }
+
+      function updateFont() {
+        let selectedFont = document.getElementById("font-select").value;
+        document.getElementById("user-message").style.fontFamily = selectedFont;
+      }
+
+      function updateBackground() {
+        let input = document.getElementById("image-upload");
+        let card = document.getElementById("card");
+
+        if (input.files && input.files[0]) {
+          let file = input.files[0];
+
+          if (file.size > 3 * 1024 * 1024) {
+            alert("Please select an image smaller than 3MB.");
+            return;
+          }
+
+          let reader = new FileReader();
+
+          reader.onload = function (event) {
+            let imageUrl = event.target.result;
+            card.style.backgroundImage = `url('${imageUrl}')`;
+          };
+
+          reader.readAsDataURL(file);
+        } else {
+          alert("No file selected.");
+        }
+      }
+
+      function downloadCard() {
+        html2canvas(document.getElementById("card")).then((canvas) => {
+          let link = document.createElement("a");
+          link.href = canvas.toDataURL("image/png");
+          link.download = "valentine_card.png";
+          
+          link.click();
+        });
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+  </body>
+</html>]
 
 # Run
 
-[commands]
+[python -m http.server]
 
 # Screenshots (Add at least 3)
 
